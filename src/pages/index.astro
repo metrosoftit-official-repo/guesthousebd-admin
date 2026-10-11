@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Find stays and local travel services across Bangladesh." />
+    <title>GuesthouseBD | Stay closer to the good stuff</title>
+  </head>
+  <body class="min-h-screen bg-[#f4f5f2] font-sans text-[#17201d]">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="GuesthouseBD home"><span>G</span> GuesthouseBD</a>
+      <nav aria-label="Main navigation">
+        <a href="/guestHouses/dhaka/">Explore stays</a>
+        <a href="/account/">Guest account</a>
+        <a class="admin-link" href="/admin/">Admin</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">BANGLADESH, YOUR WAY</p>
+          <h1>Stay closer<br />to the good stuff.</h1>
+          <p class="subcopy">Find a place to land, a local to show you around, and a smoother way to get there.</p>
+          <div class="actions">
+            <a class="primary-action" href="/guestHouses/dhaka/">Explore stays <span aria-hidden="true">↗</span></a>
+            <a class="secondary-action" href="/account/">Sign in or join</a>
+          </div>
+        </div>
+        <div class="hero-image" role="img" aria-label="A guesthouse nestled in a green hillside"></div>
+      </section>
+      <section class="offerings" aria-label="Travel services">
+        <div><span>01</span><strong>Stays</strong><small>Rooms, homes and guesthouses</small></div>
+        <div><span>02</span><strong>Pick &amp; drop</strong><small>Local rides for the journey</small></div>
+        <div><span>03</span><strong>People</strong><small>Guides and tour assistants</small></div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(html) { background: #f4f5f2; }
+  .site-header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 5vw, 76px); border-bottom: 1px solid #e2e5df; }
+  .brand { display: flex; align-items: center; gap: 10px; color: #244b3d; font-weight: 700; text-decoration: none; }
+  .brand span { display: grid; place-items: center; width: 31px; aspect-ratio: 1; border-radius: 50%; background: #d27551; color: white; font-family: Georgia, serif; font-size: 19px; }
+  nav { display: flex; align-items: center; gap: clamp(14px, 3vw, 36px); }
+  nav a { color: #4f5d55; font-size: 13px; text-decoration: none; }
+  nav a:hover { color: #a95c43; }
+  nav .admin-link { padding: 9px 13px; border: 1px solid #d5dad3; border-radius: 4px; color: #244b3d; }
+  .hero { display: grid; grid-template-columns: 0.92fr 1.08fr; align-items: center; gap: clamp(36px, 7vw, 100px); max-width: 1440px; min-height: 590px; margin: auto; padding: 48px clamp(20px, 5vw, 76px); }
+  .hero-copy { max-width: 490px; }
+  .eyebrow { margin: 0 0 19px; color: #a95c43; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; }
+  h1 { margin: 0; color: #203a30; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(48px, 6vw, 79px); font-weight: 400; line-height: 0.98; }
+  .subcopy { max-width: 390px; margin: 23px 0 28px; color: #67736c; font-size: 15px; line-height: 1.75; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+  .primary-action { display: inline-flex; align-items: center; gap: 28px; padding: 14px 17px; border-radius: 4px; background: #244b3d; color: white; font-size: 13px; font-weight: 600; text-decoration: none; }
+  .primary-action:hover { background: #1d4034; }
+  .secondary-action { color: #53645a; font-size: 13px; text-decoration: none; }
+  .hero-image { min-height: 440px; background: linear-gradient(180deg, transparent 60%, rgb(14 33 26 / 0.16)), url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1400&q=85') center / cover; }
+  .offerings { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1440px; margin: 0 auto; padding: 25px clamp(20px, 5vw, 76px) 37px; border-top: 1px solid #e2e5df; }
+  .offerings div { display: grid; grid-template-columns: 42px 1fr; align-items: baseline; gap: 2px 8px; padding-right: 20px; }
+  .offerings span { grid-row: span 2; color: #b36a4d; font-size: 11px; }
+  .offerings strong { color: #2b4137; font-size: 14px; }
+  .offerings small { color: #7d8781; font-size: 11px; }
+  @media (max-width: 760px) {
+    .site-header { min-height: 64px; }
+    nav { gap: 12px; }
+    nav a { font-size: 12px; }
+    nav a:first-child { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 28px; min-height: auto; padding-top: 57px; }
+    .hero-image { min-height: 290px; }
+    .offerings { gap: 18px; }
+    .offerings div { grid-template-columns: 1fr; gap: 4px; padding: 0; }
+    .offerings span { grid-row: auto; }
+  }
+</style>

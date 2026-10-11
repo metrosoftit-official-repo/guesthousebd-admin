@@ -1,0 +1,460 @@
+---
+import '../../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="GuesthouseBD marketplace operations." />
+    <title>Operations | GuesthouseBD</title>
+  </head>
+  <body class="min-h-screen bg-[#f3f5f2] font-sans text-[#202a25]">
+    <div id="access-state" class="access-state" role="status" aria-live="polite">
+      <div class="access-mark">G</div>
+      <p class="eyebrow">GUESTHOUSEBD OPERATIONS</p>
+      <h1 id="access-title">Checking your workspace</h1>
+      <p id="access-message">Verifying your account and team access.</p>
+      <a id="sign-in-link" href="/account/" hidden>Sign in to continue</a>
+      <button id="access-sign-out" type="button" hidden>Sign out</button>
+    </div>
+
+    <div id="admin-app" class="admin-shell" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="GuesthouseBD home">
+          <span class="brand-mark">G</span>
+          <span>Guesthouse<span class="brand-light">BD</span></span>
+        </a>
+        <p class="sidebar-label">WORKSPACE</p>
+        <nav aria-label="Admin navigation">
+          <a class="nav-link active" href="#overview"><span>◫</span> Overview</a>
+          <a class="nav-link" href="#reservations"><span>▤</span> Reservations</a>
+          <a class="nav-link" href="#stays"><span>⌂</span> Stays</a>
+          <a class="nav-link" href="#inventory"><span>▦</span> Inventory</a>
+          <a class="nav-link" href="#safety"><span>◇</span> Safety</a>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="/">View public site <span aria-hidden="true">↗</span></a>
+          <button id="sign-out" type="button">Sign out</button>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">OPERATIONS</p>
+            <h1 id="workspace-name">Workspace overview</h1>
+          </div>
+          <label class="workspace-picker">
+            <span>Workspace</span>
+            <select id="tenant-select" aria-label="Select workspace"></select>
+          </label>
+        </header>
+
+        <section id="overview" class="page-section">
+          <div class="section-heading">
+            <div>
+              <h2>Today at a glance</h2>
+              <p id="overview-date"></p>
+            </div>
+            <span id="role-badge" class="role-badge"></span>
+          </div>
+          <div class="metric-grid">
+            <article class="metric-panel">
+              <span class="metric-label">Published stays</span>
+              <strong id="stays-count" class="metric-value">—</strong>
+              <span class="metric-note">Live in your workspace</span>
+            </article>
+            <article class="metric-panel">
+              <span class="metric-label">Reservations</span>
+              <strong id="bookings-count" class="metric-value">—</strong>
+              <span class="metric-note">All current statuses</span>
+            </article>
+            <article class="metric-panel">
+              <span class="metric-label">Reorder alerts</span>
+              <strong id="stock-count" class="metric-value">—</strong>
+              <span class="metric-note">Items at or below threshold</span>
+            </article>
+            <article class="metric-panel">
+              <span class="metric-label">Open incidents</span>
+              <strong id="incident-count" class="metric-value">—</strong>
+              <span class="metric-note">Awaiting follow-up</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <article id="reservations" class="data-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">GUEST ACTIVITY</p>
+                <h2>Recent reservations</h2>
+              </div>
+              <span id="bookings-scope" class="subtle-label"></span>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>Reference</th><th>Status</th><th>Total</th><th>Created</th></tr>
+                </thead>
+                <tbody id="bookings-body">
+                  <tr><td colspan="4" class="empty-cell">Choose a workspace to load reservations.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article id="stays" class="data-panel side-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">CATALOG</p>
+                <h2>Stay listings</h2>
+              </div>
+              <span class="panel-symbol">⌂</span>
+            </div>
+            <p class="panel-copy">Published properties currently available in your workspace.</p>
+            <a class="panel-link" href="/guestHouses/dhaka/">Open public listings <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <article id="inventory" class="data-panel side-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SUPPLY</p>
+                <h2>Inventory watch</h2>
+              </div>
+              <span class="panel-symbol">▦</span>
+            </div>
+            <p id="inventory-summary" class="panel-copy">Stock levels are visible to inventory managers.</p>
+            <ul id="inventory-list" class="compact-list"></ul>
+          </article>
+
+          <article id="safety" class="data-panel side-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">ON-SITE</p>
+                <h2>Safety queue</h2>
+              </div>
+              <span class="panel-symbol">◇</span>
+            </div>
+            <p id="safety-summary" class="panel-copy">Incident details are restricted to assigned staff and workspace safety roles.</p>
+            <ul id="incident-list" class="compact-list"></ul>
+          </article>
+        </section>
+        <footer class="page-footer"><span>GuesthouseBD Operations</span><span id="signed-in-as"></span></footer>
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  :global(html) { background: #f3f5f2; scroll-behavior: smooth; }
+  [hidden] { display: none !important; }
+  .access-state { min-height: 100vh; display: grid; place-content: center; justify-items: center; padding: 24px; text-align: center; }
+  .access-mark { display: grid; place-items: center; width: 44px; aspect-ratio: 1; margin-bottom: 23px; border-radius: 50%; background: #d27551; color: white; font-family: Georgia, serif; font-size: 25px; }
+  .eyebrow { margin: 0 0 9px; color: #a95c43; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; }
+  .access-state h1 { margin: 0; font-size: 25px; font-weight: 600; }
+  .access-state > p:not(.eyebrow) { max-width: 400px; margin: 11px 0 0; color: #6c7771; font-size: 13px; line-height: 1.6; }
+  .access-state a, .access-state button { margin-top: 18px; padding: 11px 16px; border: 0; border-radius: 4px; background: #244b3d; color: #fff; font: inherit; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .admin-shell { min-height: 100vh; }
+  .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 5; display: flex; flex-direction: column; width: 236px; padding: 25px 16px 18px; border-right: 1px solid #e1e5df; background: #fff; }
+  .brand { display: flex; align-items: center; gap: 10px; margin: 0 7px 47px; color: #244b3d; font-size: 16px; font-weight: 700; text-decoration: none; }
+  .brand-mark { display: grid; place-items: center; width: 31px; aspect-ratio: 1; border-radius: 50%; background: #d27551; color: #fff; font-family: Georgia, serif; font-size: 19px; }
+  .brand-light { font-weight: 400; }
+  .sidebar-label { margin: 0 10px 10px; color: #9ba49e; font-size: 9px; font-weight: 700; letter-spacing: 0.13em; }
+  .sidebar nav { display: grid; gap: 5px; }
+  .nav-link { display: flex; align-items: center; gap: 12px; min-height: 41px; padding: 0 11px; border-radius: 4px; color: #59665f; font-size: 12px; text-decoration: none; }
+  .nav-link span { width: 17px; color: #87938b; font-size: 16px; text-align: center; }
+  .nav-link:hover { background: #f3f6f2; color: #244b3d; }
+  .nav-link.active { background: #eaf1eb; color: #244b3d; font-weight: 700; }
+  .nav-link.active span { color: #b46346; }
+  .sidebar-footer { display: grid; gap: 9px; margin-top: auto; padding: 15px 8px 0; border-top: 1px solid #e7eae6; }
+  .sidebar-footer a, .sidebar-footer button { display: flex; justify-content: space-between; padding: 5px 0; border: 0; background: none; color: #68756d; font: inherit; font-size: 11px; text-align: left; text-decoration: none; cursor: pointer; }
+  .main-panel { max-width: 1600px; margin-left: 236px; padding: 0 34px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 92px; border-bottom: 1px solid #e1e5df; }
+  .topbar h1 { margin: 0; color: #233a30; font-size: 21px; font-weight: 600; }
+  .workspace-picker { display: grid; gap: 5px; min-width: 210px; color: #7d8781; font-size: 10px; }
+  .workspace-picker select { height: 36px; padding: 0 30px 0 10px; border: 1px solid #dce1db; border-radius: 4px; background: #fff; color: #33433a; font: inherit; font-size: 12px; }
+  .page-section { padding-top: 24px; }
+  .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+  .section-heading h2, .panel-heading h2 { margin: 0; color: #273a31; font-size: 15px; font-weight: 600; }
+  .section-heading p { margin: 6px 0 0; color: #89928c; font-size: 11px; }
+  .role-badge { padding: 6px 9px; border: 1px solid #dce3dc; border-radius: 3px; color: #527361; font-size: 10px; text-transform: capitalize; }
+  .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .metric-panel, .data-panel { border: 1px solid #e0e5df; border-radius: 5px; background: #fff; }
+  .metric-panel { display: grid; gap: 10px; min-height: 108px; padding: 16px; }
+  .metric-label { color: #758078; font-size: 11px; }
+  .metric-value { color: #293e33; font-size: 26px; line-height: 1; font-weight: 600; }
+  .metric-note { color: #9aa29d; font-size: 10px; }
+  .content-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.8fr); gap: 13px; padding-top: 15px; }
+  .data-panel { min-width: 0; padding: 17px; scroll-margin-top: 20px; }
+  .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .panel-heading .eyebrow { margin-bottom: 7px; }
+  .subtle-label { color: #9aa29d; font-size: 10px; }
+  .panel-symbol { color: #b66b4e; font-size: 17px; }
+  .panel-copy { min-height: 35px; margin: 17px 0 13px; color: #79847d; font-size: 11px; line-height: 1.6; }
+  .panel-link { display: inline-flex; gap: 12px; color: #315e4a; font-size: 11px; font-weight: 600; text-decoration: none; }
+  .panel-link:hover { color: #a95c43; }
+  .table-scroll { overflow-x: auto; margin-top: 17px; }
+  table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+  th { padding: 9px 10px; border-bottom: 1px solid #e8ebe7; color: #8d9790; font-size: 9px; font-weight: 600; text-transform: uppercase; }
+  td { padding: 12px 10px; border-bottom: 1px solid #f0f2ef; color: #54625a; font-size: 11px; }
+  .empty-cell { padding: 28px 10px; color: #929b95; text-align: center; white-space: normal; }
+  .status-chip { display: inline-block; padding: 4px 7px; border-radius: 3px; background: #edf3ed; color: #54725f; font-size: 9px; text-transform: capitalize; }
+  .status-chip[data-status='cancelled'], .status-chip[data-status='expired'], .status-chip[data-status='failed'] { background: #f8ece8; color: #a85642; }
+  .compact-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .compact-list:empty { display: none; }
+  .compact-list li { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #edf0ec; color: #59675f; font-size: 10px; }
+  .compact-list b { color: #344a3d; font-weight: 600; }
+  .page-footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding: 15px 0; border-top: 1px solid #e1e5df; color: #929b95; font-size: 10px; }
+  @media (max-width: 1000px) {
+    .sidebar { width: 190px; }
+    .main-panel { margin-left: 190px; padding: 0 22px; }
+    .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .sidebar { position: static; width: auto; padding: 13px 14px 10px; border-right: 0; border-bottom: 1px solid #e1e5df; }
+    .brand { margin: 0 4px 12px; }
+    .sidebar-label, .sidebar-footer { display: none; }
+    .sidebar nav { display: flex; overflow-x: auto; gap: 4px; }
+    .nav-link { flex: 0 0 auto; min-height: 36px; padding: 0 9px; font-size: 10px; }
+    .main-panel { margin-left: 0; padding: 0 15px; }
+    .topbar { align-items: start; flex-direction: column; justify-content: center; gap: 12px; padding: 18px 0; }
+    .workspace-picker { width: 100%; }
+    .content-grid { grid-template-columns: 1fr; }
+    .section-heading { align-items: start; }
+    .metric-panel { min-height: 96px; padding: 13px; }
+    .metric-value { font-size: 23px; }
+  }
+</style>
+
+<script>
+  import { onAuthStateChanged, signOut } from 'firebase/auth';
+  import { firebaseAuth } from '../../lib/firebase';
+  import { supabaseClient } from '../../lib/supabase-client';
+
+  type TenantMembership = {
+    tenant_id: string;
+    role: string;
+    tenant: { name: string; slug: string } | null;
+  };
+
+  const accessState = document.querySelector<HTMLElement>('#access-state');
+  const accessTitle = document.querySelector<HTMLElement>('#access-title');
+  const accessMessage = document.querySelector<HTMLElement>('#access-message');
+  const signInLink = document.querySelector<HTMLAnchorElement>('#sign-in-link');
+  const accessSignOut = document.querySelector<HTMLButtonElement>('#access-sign-out');
+  const adminApp = document.querySelector<HTMLElement>('#admin-app');
+  const tenantSelect = document.querySelector<HTMLSelectElement>('#tenant-select');
+  const workspaceName = document.querySelector<HTMLElement>('#workspace-name');
+  const roleBadge = document.querySelector<HTMLElement>('#role-badge');
+  const signedInAs = document.querySelector<HTMLElement>('#signed-in-as');
+  const accessRoles = new Set([
+    'owner', 'admin', 'manager', 'catalog_manager', 'booking_manager',
+    'finance_manager', 'inventory_manager', 'sales_manager', 'security_guard', 'support_agent',
+  ]);
+  let memberships: TenantMembership[] = [];
+
+  function showAccessMessage(title: string, message: string, showSignIn = false, showSignOut = false) {
+    if (accessState) accessState.hidden = false;
+    if (adminApp) adminApp.hidden = true;
+    if (accessTitle) accessTitle.textContent = title;
+    if (accessMessage) accessMessage.textContent = message;
+    if (signInLink) signInLink.hidden = !showSignIn;
+    if (accessSignOut) accessSignOut.hidden = !showSignOut;
+  }
+
+  function setMetric(id: string, value: number | string) {
+    const element = document.querySelector<HTMLElement>(`#${id}`);
+    if (element) element.textContent = String(value);
+  }
+
+  function formatMoney(amountMinor: number, currency: string) {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amountMinor / 100);
+  }
+
+  function formatDate(value: string) {
+    return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(new Date(value));
+  }
+
+  async function loadWorkspace(membership: TenantMembership) {
+    const tenantId = membership.tenant_id;
+    if (!tenantId) return;
+    if (workspaceName) workspaceName.textContent = membership.tenant?.name ?? 'Workspace overview';
+    if (roleBadge) roleBadge.textContent = membership.role.replaceAll('_', ' ');
+
+    const canCatalog = ['owner', 'admin', 'manager', 'catalog_manager', 'booking_manager'].includes(membership.role);
+    const canBookings = ['owner', 'admin', 'manager', 'booking_manager', 'support_agent'].includes(membership.role);
+    const canInventory = ['owner', 'admin', 'manager', 'inventory_manager'].includes(membership.role);
+    const canSafety = ['owner', 'admin', 'manager', 'security_guard'].includes(membership.role);
+
+    setMetric('stays-count', '—');
+    setMetric('bookings-count', '—');
+    setMetric('stock-count', '—');
+    setMetric('incident-count', '—');
+
+    if (canCatalog) {
+      const { count, error } = await supabaseClient.from('listings')
+        .select('id', { count: 'exact', head: true })
+        .eq('tenant_id', tenantId)
+        .eq('listing_type', 'stay')
+        .eq('status', 'published');
+      setMetric('stays-count', error ? '!' : count ?? 0);
+    }
+
+    if (canBookings) {
+      const { count, error } = await supabaseClient.from('bookings')
+        .select('id', { count: 'exact', head: true })
+        .eq('tenant_id', tenantId);
+      setMetric('bookings-count', error ? '!' : count ?? 0);
+      if (signedInAs) signedInAs.dataset.bookingAccess = 'true';
+      const { data, error: bookingError } = await supabaseClient.from('bookings')
+        .select('booking_code,status,total_minor,currency_code,created_at')
+        .eq('tenant_id', tenantId)
+        .order('created_at', { ascending: false })
+        .limit(6);
+      const body = document.querySelector<HTMLTableSectionElement>('#bookings-body');
+      if (body) {
+        body.replaceChildren();
+        if (bookingError || !data?.length) {
+          const row = body.insertRow();
+          const cell = row.insertCell();
+          cell.colSpan = 4;
+          cell.className = 'empty-cell';
+          cell.textContent = bookingError ? 'Reservations could not be loaded.' : 'No reservations in this workspace yet.';
+        } else {
+          for (const booking of data) {
+            const row = body.insertRow();
+            row.insertCell().textContent = booking.booking_code;
+            const statusCell = row.insertCell();
+            const badge = document.createElement('span');
+            badge.className = 'status-chip';
+            badge.dataset.status = booking.status;
+            badge.textContent = booking.status.replaceAll('_', ' ');
+            statusCell.append(badge);
+            row.insertCell().textContent = formatMoney(booking.total_minor, booking.currency_code);
+            row.insertCell().textContent = formatDate(booking.created_at);
+          }
+        }
+      }
+      const scope = document.querySelector<HTMLElement>('#bookings-scope');
+      if (scope) scope.textContent = 'Latest 6';
+    } else {
+      const body = document.querySelector<HTMLTableSectionElement>('#bookings-body');
+      if (body) {
+        body.replaceChildren();
+        const row = body.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 4;
+        cell.className = 'empty-cell';
+        cell.textContent = 'Reservation access is limited to booking managers and support staff.';
+      }
+      const scope = document.querySelector<HTMLElement>('#bookings-scope');
+      if (scope) scope.textContent = 'Restricted';
+    }
+
+    if (canInventory) {
+      const { count, error } = await supabaseClient.from('inventory_reorder_alerts')
+        .select('id', { count: 'exact', head: true })
+        .eq('tenant_id', tenantId);
+      setMetric('stock-count', error ? '!' : count ?? 0);
+      const { data } = await supabaseClient.from('inventory_reorder_alerts')
+        .select('sku,name,on_hand_quantity,reorder_level,unit_name')
+        .eq('tenant_id', tenantId)
+        .order('name')
+        .limit(4);
+      const list = document.querySelector<HTMLElement>('#inventory-list');
+      if (list) {
+        list.replaceChildren();
+        for (const item of data ?? []) {
+          const row = document.createElement('li');
+          const name = document.createElement('span');
+          const quantity = document.createElement('b');
+          name.textContent = `${item.name} (${item.sku})`;
+          quantity.textContent = `${item.on_hand_quantity} / ${item.reorder_level} ${item.unit_name}`;
+          row.append(name, quantity);
+          list.append(row);
+        }
+      }
+    }
+
+    if (canSafety) {
+      const { count, error } = await supabaseClient.from('security_incidents')
+        .select('id', { count: 'exact', head: true })
+        .eq('tenant_id', tenantId)
+        .in('status', ['open', 'investigating']);
+      setMetric('incident-count', error ? '!' : count ?? 0);
+      const { data } = await supabaseClient.from('security_incidents')
+        .select('title,severity,status,occurred_at')
+        .eq('tenant_id', tenantId)
+        .in('status', ['open', 'investigating'])
+        .order('occurred_at', { ascending: false })
+        .limit(4);
+      const list = document.querySelector<HTMLElement>('#incident-list');
+      if (list) {
+        list.replaceChildren();
+        for (const incident of data ?? []) {
+          const row = document.createElement('li');
+          const title = document.createElement('span');
+          const severity = document.createElement('b');
+          title.textContent = incident.title;
+          severity.textContent = `${incident.severity} · ${incident.status}`;
+          row.append(title, severity);
+          list.append(row);
+        }
+      }
+    }
+  }
+
+  tenantSelect?.addEventListener('change', () => {
+    const membership = memberships.find((item) => item.tenant_id === tenantSelect.value);
+    if (membership) void loadWorkspace(membership);
+  });
+
+  async function initializeAdmin(user: NonNullable<typeof firebaseAuth.currentUser>) {
+    showAccessMessage('Checking your workspace', 'Verifying your staff access.');
+    try {
+      await user.getIdToken(true);
+      const { error: profileError } = await supabaseClient.rpc('ensure_guest_profile');
+      if (profileError) throw profileError;
+      const { data, error } = await supabaseClient.from('tenant_memberships')
+        .select('tenant_id,role,tenant:tenants(name,slug)')
+        .eq('is_active', true);
+      if (error) throw error;
+      memberships = (data ?? []).filter((item) => accessRoles.has(item.role)) as TenantMembership[];
+      if (!memberships.length) {
+        showAccessMessage('No staff workspace assigned', 'Your signed-in account does not have an active GuesthouseBD staff role. Ask a workspace owner to provision access.', false, true);
+        return;
+      }
+
+      if (accessState) accessState.hidden = true;
+      if (adminApp) adminApp.hidden = false;
+      if (signedInAs) signedInAs.textContent = user.email ?? 'Staff account';
+      const today = document.querySelector<HTMLElement>('#overview-date');
+      if (today) today.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: 'full' }).format(new Date());
+      if (tenantSelect) {
+        tenantSelect.replaceChildren();
+        for (const membership of memberships) {
+          const option = document.createElement('option');
+          option.value = membership.tenant_id;
+          option.textContent = membership.tenant?.name ?? membership.tenant?.slug ?? 'Workspace';
+          tenantSelect.append(option);
+        }
+        await loadWorkspace(memberships[0]);
+      }
+    } catch {
+      showAccessMessage('Workspace access unavailable', 'Sign in again after Firebase is connected to Supabase and your staff role is provisioned.', false, true);
+    }
+  }
+
+  onAuthStateChanged(firebaseAuth, (user) => {
+    if (!user) {
+      showAccessMessage('Staff sign-in required', 'Sign in with your GuesthouseBD staff account to open operations.', true);
+      return;
+    }
+    void initializeAdmin(user);
+  });
+
+  accessSignOut?.addEventListener('click', () => void signOut(firebaseAuth));
+  document.querySelector('#sign-out')?.addEventListener('click', () => void signOut(firebaseAuth));
+</script>

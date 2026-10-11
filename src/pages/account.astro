@@ -1,0 +1,259 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sign in to manage your GuesthouseBD trips." />
+    <title>Guest account | GuesthouseBD</title>
+  </head>
+  <body class="min-h-screen bg-[#f4f5f2] font-sans text-[#17201d]">
+    <main class="account-shell">
+      <section class="account-photo" aria-label="A quiet guesthouse in the hills">
+        <a class="brand" href="/" aria-label="GuesthouseBD home">
+          <span class="brand-mark">G</span>
+          <span>Guesthouse<span class="brand-light">BD</span></span>
+        </a>
+        <div class="photo-copy">
+          <p>GO A LITTLE FURTHER</p>
+          <h1>Make room<br />for the good stuff.</h1>
+          <span>Stays, local guides and rides, all in one place.</span>
+        </div>
+        <div class="photo-credit">Bangladesh, at your own pace</div>
+      </section>
+
+      <section class="account-panel" aria-labelledby="account-heading">
+        <a class="mobile-brand" href="/">Guesthouse<span>BD</span></a>
+        <div class="form-wrap">
+          <a class="back-link" href="/">← Back to exploring</a>
+          <p class="eyebrow">YOUR TRAVEL ACCOUNT</p>
+          <h2 id="account-heading">Welcome back</h2>
+          <p class="intro">Sign in to keep your plans together.</p>
+
+          <button id="google-sign-in" class="google-button" type="button">
+            <span class="google-mark" aria-hidden="true">G</span>
+            Continue with Google
+          </button>
+
+          <div class="divider"><span>or use email</span></div>
+
+          <form id="account-form" class="account-form">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters" />
+
+            <button id="submit-account" class="submit-button" type="submit">Sign in</button>
+          </form>
+
+          <p id="auth-status" class="auth-status" role="status" aria-live="polite"></p>
+          <div id="signed-in-actions" class="signed-in-actions" hidden>
+            <a href="/guestHouses/dhaka/">Explore stays <span aria-hidden="true">↗</span></a>
+            <button id="sign-out" type="button">Sign out</button>
+          </div>
+
+          <p class="switch-mode">
+            <span id="mode-prompt">New to GuesthouseBD?</span>
+            <button id="toggle-mode" type="button">Create an account</button>
+          </p>
+          <p class="terms">By continuing, you agree to our <a href="#terms">Terms</a> and <a href="#privacy">Privacy Policy</a>.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(html) { background: #f4f5f2; }
+  .account-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(420px, 0.96fr); }
+  .account-photo { min-height: 100vh; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 34px 42px; color: #fff; background: linear-gradient(180deg, rgb(15 28 26 / 0.18), rgb(15 28 26 / 0.72)), url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1800&q=85') center 52% / cover; }
+  .brand { display: inline-flex; align-items: center; gap: 11px; width: fit-content; color: inherit; font-size: 18px; font-weight: 700; text-decoration: none; }
+  .brand-mark { display: grid; place-items: center; width: 35px; aspect-ratio: 1; border-radius: 50%; background: #d27551; color: white; font-family: Georgia, serif; font-size: 22px; }
+  .brand-light { font-weight: 400; }
+  .photo-copy { max-width: 540px; padding: 0 0 50px; }
+  .photo-copy p, .eyebrow { margin: 0 0 14px; color: #d78b6c; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; }
+  .photo-copy h1 { margin: 0 0 16px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(48px, 5vw, 76px); font-weight: 400; line-height: 0.98; }
+  .photo-copy span { color: rgb(255 255 255 / 0.82); font-size: 15px; }
+  .photo-credit { color: rgb(255 255 255 / 0.75); font-size: 12px; }
+  .account-panel { display: grid; place-items: center; padding: 48px 36px; }
+  .form-wrap { width: min(100%, 410px); }
+  .back-link { display: inline-block; margin-bottom: 48px; color: #64716b; font-size: 13px; text-decoration: none; }
+  .back-link:hover, .terms a:hover { color: #b35f43; }
+  .eyebrow { margin-bottom: 10px; color: #ad684f; }
+  h2 { margin: 0; font-size: 32px; line-height: 1.15; font-weight: 600; }
+  .intro { margin: 10px 0 27px; color: #68746e; font-size: 14px; }
+  .google-button, .submit-button { width: 100%; min-height: 48px; border: 1px solid #d8ddd7; border-radius: 5px; background: white; color: #25312c; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .google-button { display: flex; justify-content: center; align-items: center; gap: 10px; }
+  .google-button:hover { background: #fbfcfa; border-color: #b9c2ba; }
+  .google-mark { font-size: 17px; font-weight: 700; color: #4285f4; }
+  .divider { display: flex; align-items: center; gap: 13px; margin: 22px 0; color: #8a938e; font-size: 12px; }
+  .divider::before, .divider::after { height: 1px; flex: 1; background: #dde1db; content: ''; }
+  .account-form { display: grid; gap: 9px; }
+  .account-form label { margin-top: 8px; color: #35413b; font-size: 12px; font-weight: 600; }
+  .account-form input { width: 100%; min-height: 46px; box-sizing: border-box; padding: 0 13px; border: 1px solid #d8ddd7; border-radius: 4px; outline: none; background: #fff; color: #1c2822; font: inherit; font-size: 14px; }
+  .account-form input:focus { border-color: #69917c; box-shadow: 0 0 0 3px rgb(105 145 124 / 0.16); }
+  .submit-button { margin-top: 13px; border-color: #244b3d; background: #244b3d; color: #fff; }
+  .submit-button:hover { background: #1d4034; }
+  button:disabled { cursor: wait; opacity: 0.65; }
+  .auth-status { min-height: 20px; margin: 14px 0 0; color: #52685c; font-size: 12px; line-height: 1.5; }
+  .auth-status[data-error='true'] { color: #a54136; }
+  .signed-in-actions { align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid #dde1db; border-bottom: 1px solid #dde1db; }
+  .signed-in-actions:not([hidden]) { display: flex; }
+  .signed-in-actions a, .signed-in-actions button { border: 0; background: none; color: #244b3d; font: inherit; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .switch-mode { margin: 23px 0 0; color: #68746e; font-size: 13px; text-align: center; }
+  .switch-mode button { border: 0; background: none; color: #a95c43; font: inherit; font-weight: 700; cursor: pointer; }
+  .terms { margin: 33px 0 0; color: #909892; font-size: 11px; line-height: 1.7; text-align: center; }
+  .terms a { color: #63716a; }
+  .mobile-brand { display: none; }
+  @media (max-width: 760px) {
+    .account-shell { min-height: 100svh; display: block; }
+    .account-photo { display: none; }
+    .account-panel { min-height: 100svh; box-sizing: border-box; align-content: center; padding: 30px 24px; }
+    .mobile-brand { display: block; margin-bottom: 42px; color: #244b3d; font-size: 18px; font-weight: 700; text-decoration: none; }
+    .mobile-brand span { font-weight: 400; }
+    .back-link { margin-bottom: 35px; }
+  }
+</style>
+
+<script>
+  import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    sendEmailVerification,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+  } from 'firebase/auth';
+  import { firebaseAuth } from '../lib/firebase';
+  import { supabaseClient } from '../lib/supabase-client';
+
+  const form = document.querySelector<HTMLFormElement>('#account-form');
+  const emailInput = document.querySelector<HTMLInputElement>('#email');
+  const passwordInput = document.querySelector<HTMLInputElement>('#password');
+  const submitButton = document.querySelector<HTMLButtonElement>('#submit-account');
+  const toggleModeButton = document.querySelector<HTMLButtonElement>('#toggle-mode');
+  const modePrompt = document.querySelector<HTMLElement>('#mode-prompt');
+  const googleButton = document.querySelector<HTMLButtonElement>('#google-sign-in');
+  const signOutButton = document.querySelector<HTMLButtonElement>('#sign-out');
+  const signedInActions = document.querySelector<HTMLElement>('#signed-in-actions');
+  const status = document.querySelector<HTMLElement>('#auth-status');
+  let mode: 'signin' | 'signup' = 'signin';
+  let initializedProfileFor = '';
+  let profileInitialization: Promise<boolean> | null = null;
+
+  function setStatus(message: string, isError = false) {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.error = String(isError);
+  }
+
+  function getAuthErrorMessage(error: unknown): string {
+    const code = error instanceof Error && 'code' in error ? String(error.code) : '';
+    if (code.includes('email-already-in-use')) return 'An account already uses that email. Sign in instead.';
+    if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found')) return 'Email or password was not recognized.';
+    if (code.includes('weak-password')) return 'Choose a stronger password.';
+    if (code.includes('operation-not-allowed')) return 'This sign-in method is disabled. Enable it in Firebase Authentication > Sign-in method.';
+    if (code.includes('unauthorized-domain')) return 'This domain is not authorized. Add it in Firebase Authentication > Settings > Authorized domains.';
+    if (code.includes('popup-blocked')) return 'Google sign-in was blocked by your browser. Allow popups and try again.';
+    if (code.includes('popup-closed-by-user')) return 'Google sign-in was closed before it finished.';
+    if (code.includes('network-request-failed')) return 'Firebase could not connect. Check your connection and try again.';
+    return code ? `Authentication failed (${code}). Check Firebase Authentication settings.` : 'Authentication could not be completed. Check your connection and try again.';
+  }
+
+  function setMode(nextMode: 'signin' | 'signup') {
+    mode = nextMode;
+    if (submitButton) submitButton.textContent = mode === 'signup' ? 'Create account' : 'Sign in';
+    if (toggleModeButton) toggleModeButton.textContent = mode === 'signup' ? 'Sign in instead' : 'Create an account';
+    if (modePrompt) modePrompt.textContent = mode === 'signup' ? 'Already have an account?' : 'New to GuesthouseBD?';
+    if (passwordInput) passwordInput.autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
+  }
+
+  async function createGuestProfile(forceRetry = false): Promise<boolean> {
+    const user = firebaseAuth.currentUser;
+    if (!user) return false;
+    if (initializedProfileFor === user.uid) return true;
+
+    if (profileInitialization) {
+      const completed = await profileInitialization;
+      if (completed || !forceRetry) return completed;
+    }
+
+    profileInitialization = (async () => {
+      try {
+        await user.getIdToken(true);
+        const { error } = await supabaseClient.rpc('ensure_guest_profile');
+        if (error) throw error;
+        initializedProfileFor = user.uid;
+        setStatus('Your guest account is ready.');
+        return true;
+      } catch {
+        initializedProfileFor = '';
+        setStatus('You are signed in. Guest bookings will be available once Firebase third-party authentication is enabled in Supabase and the authenticated role claim is configured.', true);
+        return false;
+      } finally {
+        profileInitialization = null;
+      }
+    })();
+
+    return profileInitialization;
+  }
+
+  onAuthStateChanged(firebaseAuth, (user) => {
+    if (signedInActions) signedInActions.hidden = !user;
+    if (form) form.hidden = Boolean(user);
+    if (googleButton) googleButton.hidden = Boolean(user);
+    if (toggleModeButton?.parentElement) toggleModeButton.parentElement.hidden = Boolean(user);
+    if (user) {
+      setStatus(`Signed in as ${user.email ?? 'guest'}.`);
+      void createGuestProfile();
+    } else {
+      initializedProfileFor = '';
+      setStatus('');
+    }
+  });
+
+  toggleModeButton?.addEventListener('click', () => setMode(mode === 'signin' ? 'signup' : 'signin'));
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!emailInput || !passwordInput || !submitButton) return;
+    submitButton.disabled = true;
+    setStatus(mode === 'signup' ? 'Creating your account…' : 'Signing you in…');
+    try {
+      if (mode === 'signup') {
+        const credential = await createUserWithEmailAndPassword(firebaseAuth, emailInput.value.trim(), passwordInput.value);
+        await sendEmailVerification(credential.user);
+        await credential.user.getIdToken(true);
+      } else {
+        await signInWithEmailAndPassword(firebaseAuth, emailInput.value.trim(), passwordInput.value);
+      }
+      await createGuestProfile(true);
+    } catch (error) {
+      setStatus(getAuthErrorMessage(error), true);
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+
+  googleButton?.addEventListener('click', async () => {
+    googleButton.disabled = true;
+    setStatus('Connecting to Google…');
+    try {
+      await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
+      await createGuestProfile(true);
+    } catch (error) {
+      setStatus(getAuthErrorMessage(error), true);
+    } finally {
+      googleButton.disabled = false;
+    }
+  });
+
+  signOutButton?.addEventListener('click', async () => {
+    await signOut(firebaseAuth);
+  });
+</script>
