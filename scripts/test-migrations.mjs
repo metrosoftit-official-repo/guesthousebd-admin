@@ -6,9 +6,9 @@ import { PGlite } from '@electric-sql/pglite';
 
 const migrationDirectory = fileURLToPath(new URL('../supabase/migrations/', import.meta.url));
 const migrationFiles = [
-	'20261010115738_platform_foundation.sql',
-	'20261010115743_marketplace_operations.sql',
-	'20261010115748_public_catalog_views_and_functions.sql',
+	'20261011120516_platform_foundation.sql',
+	'20261011120630_marketplace_operations.sql',
+	'20261011120707_public_catalog_views_and_functions.sql',
 ];
 
 const database = new PGlite();

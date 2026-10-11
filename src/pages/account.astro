@@ -122,11 +122,12 @@ import '../styles/global.css';
 <script>
   import {
     createUserWithEmailAndPassword,
+    getRedirectResult,
     GoogleAuthProvider,
     onAuthStateChanged,
     sendEmailVerification,
     signInWithEmailAndPassword,
-    signInWithPopup,
+    signInWithRedirect,
     signOut,
   } from 'firebase/auth';
   import { firebaseAuth } from '../lib/firebase';
@@ -217,6 +218,12 @@ import '../styles/global.css';
     }
   });
 
+  void getRedirectResult(firebaseAuth).then((result) => {
+    if (result) void createGuestProfile(true);
+  }).catch((error: unknown) => {
+    setStatus(getAuthErrorMessage(error), true);
+  });
+
   toggleModeButton?.addEventListener('click', () => setMode(mode === 'signin' ? 'signup' : 'signin'));
 
   form?.addEventListener('submit', async (event) => {
@@ -244,8 +251,7 @@ import '../styles/global.css';
     googleButton.disabled = true;
     setStatus('Connecting to Google…');
     try {
-      await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
-      await createGuestProfile(true);
+      await signInWithRedirect(firebaseAuth, new GoogleAuthProvider());
     } catch (error) {
       setStatus(getAuthErrorMessage(error), true);
     } finally {
