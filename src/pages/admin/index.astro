@@ -442,8 +442,15 @@ import '../../styles/global.css';
         }
         await loadWorkspace(memberships[0]);
       }
-    } catch {
-      showAccessMessage('Workspace access unavailable', 'Sign in again after Firebase is connected to Supabase and your staff role is provisioned.', false, true);
+    } catch (error) {
+      const code = error instanceof Error && 'code' in error ? String(error.code) : '';
+      console.error('Unable to initialize admin workspace.', error);
+      const message = ['PGRST202', 'PGRST205'].includes(code)
+        ? 'Supabase database setup is incomplete. Apply the repository migrations, then verify Firebase third-party auth and the authenticated role claim.'
+        : ['PGRST301', 'PGRST302'].includes(code)
+          ? 'Supabase rejected the Firebase ID token. Configure Firebase as a third-party auth provider with the authenticated role claim, then sign in again.'
+          : 'The workspace could not be loaded. Check the browser console for the underlying Supabase error.';
+      showAccessMessage('Workspace access unavailable', message, false, true);
     }
   }
 
